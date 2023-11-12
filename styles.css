@@ -1,11 +1,95 @@
 #titulo {
-    margin-top: 2rem;
+  margin-top: 2rem;
 }
 
 .container {
-    max-width: 80%;
+  max-width: 80%;
 }
 
 .form-row {
-    margin-right: 0 !important;
+  margin-right: 0 !important;
+}
+
+.container-mapa {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 5%;
+  margin-bottom: 5%;
+}
+
+svg {
+  width: 50%; /* Tamanho do mapa */
+  height: 50%;
+}
+
+/* Pinta as regiões */
+.norte {
+  fill: #4bc210;
+}
+
+.nordeste {
+  fill: darkturquoise;
+}
+
+.centro-oeste {
+  fill: orange;
+}
+
+.sudeste {
+  fill: red;
+}
+
+.sul {
+  fill: purple;
+}
+
+path {
+  fill: whitesmoke; /* Pinta o distrito federal */
+  stroke: white; /* Cor das linhas do mapa */
+  stroke-width: 1px; /* Grossura das linhas do mapa */
+}
+
+path:hover {
+  fill: rgb(58, 58, 58); /* Pinta o estado em hovered */
+  stroke: white; /* Cor das linhas do estado hovered */
+  stroke-width: 3px; /* Grossura das linhas do estado hovered */
+  transition: fill 0.5s;
+}
+
+.tooltip-map {
+  pointer-events: none;
+  position: absolute;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  text-align: center;
+  background: white;
+  padding: 10px 15px;
+  z-index: 2000;
+  margin: 0 auto;
+  color: black;
+  border-radius: 5px;
+  transform: translateX(-50%) translateY(-110%);
+  height: auto;
+  width: auto;
+  display: none;
+  border: 1px solid black;
+}
+
+.tooltip-map.active {
+  display: block;
+}
+
+.tooltip-map:after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  width: 0;
+  height: 0;
+  margin-left: -10px;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 10px solid white;
 }
