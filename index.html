@@ -38,50 +38,50 @@
 
         <nav>
             <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
-                <a class="nav-item nav-link active" id="nav-brasil-tab"  data-toggle="tab" href="#nav-brasil" role="tab" aria-controls="nav-brasil"  aria-selected="true">Brasil</a>
-                <a class="nav-item nav-link"        id="nav-profile-tab" data-toggle="tab" href="#nav-tab2"   role="tab" aria-controls="nav-profile" aria-selected="false">Tab 2</a>
-                <a class="nav-item nav-link"        id="nav-contact-tab" data-toggle="tab" href="#nav-tab3"   role="tab" aria-controls="nav-contact" aria-selected="false">Tab 3</a>
+                <a class="nav-item nav-link active" id="nav-brasil-tab"  data-toggle="tab" href="#nav-brasil"  role="tab" aria-controls="nav-brasil"  aria-selected="true">Brasil</a>
+                <a class="nav-item nav-link"        id="nav-mundo-tab"   data-toggle="tab" href="#nav-mundo"   role="tab" aria-controls="nav-mundo"   aria-selected="false">Mundo</a>
+                <a class="nav-item nav-link"        id="nav-contact-tab" data-toggle="tab" href="#nav-tab3"    role="tab" aria-controls="nav-contact" aria-selected="false">Tab 3</a>
             </div>
         </nav>
 
         <div class="tab-content" id="nav-tabContent">   
 
-            <!-- Aba 1 -->
+            <!-- Aba Brasil -->
             <div class="tab-pane fade show active" id="nav-brasil" role="tabpanel" aria-labelledby="nav-brasil-tab">
                 <br>
                 <form>
-                    <label for="selectUF">Selecione a UF</label>
+                    <label for="selectUF" class="h5">Selecione a UF</label>
                     <div class="form-row">
                         <div class="col">
                             <div class="form-group">
                                 <select class="form-control" id="selectUF">
-                                <option value="AC">Acre</option>
-                                <option value="AL">Alagoas</option>
-                                <option value="AP">Amapá</option>
-                                <option value="AM">Amazonas</option>
-                                <option value="BA">Bahia</option>
-                                <option value="CE">Ceará</option>
-                                <option value="DF">Distrito Federal</option>
-                                <option value="ES">Espírito Santo</option>
-                                <option value="GO">Goiás</option>
-                                <option value="MA">Maranhão</option>
-                                <option value="MT">Mato Grosso</option>
-                                <option value="MS">Mato Grosso do Sul</option>
-                                <option value="MG">Minas Gerais</option>
-                                <option value="PA">Pará</option>
-                                <option value="PB">Paraíba</option>
-                                <option value="PR">Paraná</option>
-                                <option value="PE">Pernambuco</option>
-                                <option value="PI">Piauí</option>
-                                <option value="RJ">Rio de Janeiro</option>
-                                <option value="RN">Rio Grande do Norte</option>
-                                <option value="RS">Rio Grande do Sul</option>
-                                <option value="RO">Rondônia</option>
-                                <option value="RR">Roraima</option>
-                                <option value="SC">Santa Catarina</option>
-                                <option value="SP">São Paulo</option>
-                                <option value="SE">Sergipe</option>
-                                <option value="TO">Tocantins</option>
+                                    <option value="AC">Acre</option>
+                                    <option value="AL">Alagoas</option>
+                                    <option value="AP">Amapá</option>
+                                    <option value="AM">Amazonas</option>
+                                    <option value="BA">Bahia</option>
+                                    <option value="CE">Ceará</option>
+                                    <option value="DF">Distrito Federal</option>
+                                    <option value="ES">Espírito Santo</option>
+                                    <option value="GO">Goiás</option>
+                                    <option value="MA">Maranhão</option>
+                                    <option value="MT">Mato Grosso</option>
+                                    <option value="MS">Mato Grosso do Sul</option>
+                                    <option value="MG">Minas Gerais</option>
+                                    <option value="PA">Pará</option>
+                                    <option value="PB">Paraíba</option>
+                                    <option value="PR">Paraná</option>
+                                    <option value="PE">Pernambuco</option>
+                                    <option value="PI">Piauí</option>
+                                    <option value="RJ">Rio de Janeiro</option>
+                                    <option value="RN">Rio Grande do Norte</option>
+                                    <option value="RS">Rio Grande do Sul</option>
+                                    <option value="RO">Rondônia</option>
+                                    <option value="RR">Roraima</option>
+                                    <option value="SC">Santa Catarina</option>
+                                    <option value="SP">São Paulo</option>
+                                    <option value="SE">Sergipe</option>
+                                    <option value="TO">Tocantins</option>
                                 </select>
                             </div>
                         </div>
@@ -100,7 +100,7 @@
                     </div>
                 </form>
         
-                <table class="table table-hover">
+                <table class="table table-hover table-striped">
                     <thead class="thead-dark">
                         <tr>
                             <th scope="col">Estado</th>
@@ -111,13 +111,55 @@
                             <th scope="col">Data</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="tableBrasil">
 
                     </tbody>
                 </table>
             </div>
 
-            <div class="tab-pane fade"             id="nav-tab2" role="tabpanel" aria-labelledby="nav-profile-tab">Tab 2</div>
+            <!-- Aba Mundo -->
+            <div class="tab-pane fade"             id="nav-mundo" role="tabpanel" aria-labelledby="nav-mundo-tab">
+                <br>
+                <form>
+                    <label for="selectPais" class="h5">Selecione o País</label>
+                    <div class="form-row">
+                        <div class="col">
+                            <div class="form-group">
+                                <select class="form-control" id="selectPais">
+                                    <option>Afghanistan</option>
+                                </select>
+                            </div>
+                        </div>
+            
+                        <div class="col">
+                            <button id="btnBuscarPais" type="button" class="btn btn-primary mb-2">
+                                Buscar País
+                            </button>
+                        </div>
+            
+                        <div>
+                            <button id="btnBuscarTodosPaises" type="button" class="btn btn-primary mb-2">
+                                Buscar Todos
+                            </button>
+                        </div>
+                    </div>
+                </form>
+        
+                <table class="table table-hover table-striped">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">País</th>
+                            <th scope="col">Confirmados</th>
+                            <th scope="col">Mortes</th>
+                            <th scope="col">Data de atualização</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableMundo">
+
+                    </tbody>
+                </table>
+            </div>
+
             <div class="tab-pane fade"             id="nav-tab3" role="tabpanel" aria-labelledby="nav-contact-tab">Tab 3</div>
         </div>
         
