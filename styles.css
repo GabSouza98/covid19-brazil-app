@@ -1,22 +1,31 @@
 #titulo {
-  margin-top: 2rem;
+  margin-top: 0rem;
 }
 
-.container {
-  max-width: 80%;
+.tableContainer {
+  align-items: center;
 }
 
-.form-row {
-  margin-right: 0 !important;
-}
-
-.container-mapa {
+.table-mapa {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-top: 5%;
   margin-bottom: 5%;
+}
+
+.container {
+  max-width: 100%;
+  padding: 0;
+}
+
+.bodyFundo {
+  background-color: #E5FFF9;
+}
+
+.form-row {
+  margin-right: 0 !important;
 }
 
 svg {
@@ -75,6 +84,19 @@ path:hover {
   width: auto;
   display: none;
   border: 1px solid black;
+}
+.nav-link {
+  background-color: #E5FFF9 !important;  
+  color:rgb(40, 167, 69) !important;
+ }
+
+ .nav-link:hover {
+  border-color: rgb(40, 167, 69) !important;
+ }
+
+.nav-link.active {
+  background-color: rgb(40, 167, 69) !important;
+  color:white !important;
 }
 
 .tooltip-map.active {
