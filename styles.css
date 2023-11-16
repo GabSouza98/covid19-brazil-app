@@ -1,12 +1,37 @@
-#titulo {
-  margin-top: 0rem;
+* {
+    font-family: 'Montserrat', sans-serif;
+    /* font-family: 'Roboto', sans-serif; */
+    font-weight: 400;
+    
 }
 
-.tableContainer {
-  align-items: center;
+body {
+    background-color: #e5fff9;
 }
 
-.table-mapa {
+th {
+    font-weight: 500;
+}
+
+.nav-item {
+    font-weight: 500;
+}
+
+.nav-link {
+  background-color: #e5fff9 !important;
+  color: rgb(40, 167, 69) !important;
+}
+
+.nav-link:hover {
+  border-color: rgb(40, 167, 69) !important;
+}
+
+.nav-link.active {
+  background-color: rgb(40, 167, 69) !important;
+  color: white !important;
+}
+
+.container-mapa {
   width: 100%;
   display: flex;
   align-items: center;
@@ -20,8 +45,9 @@
   padding: 0;
 }
 
-.bodyFundo {
-  background-color: #E5FFF9;
+.main-content {
+    max-width: 70%;
+    margin: auto;
 }
 
 .form-row {
@@ -79,24 +105,11 @@ path:hover {
   margin: 0 auto;
   color: black;
   border-radius: 5px;
-  transform: translateX(-106%) translateY(-345%);
+  transform: translateX(-50%) translateY(-110%);
   height: auto;
   width: auto;
   display: none;
   border: 1px solid black;
-}
-.nav-link {
-  background-color: #E5FFF9 !important;  
-  color:rgb(40, 167, 69) !important;
- }
-
- .nav-link:hover {
-  border-color: rgb(40, 167, 69) !important;
- }
-
-.nav-link.active {
-  background-color: rgb(40, 167, 69) !important;
-  color:white !important;
 }
 
 .tooltip-map.active {

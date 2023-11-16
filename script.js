@@ -5,6 +5,10 @@ function formatDate(dateToFormat) {
     return dateString;
 }
 
+function formatNumber(num) {
+    return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.")
+}
+
 const BASE_API_URL = 'https://covid19-brazil-api.now.sh/api/report/v1';
 
 let estadosBr = [];
@@ -38,9 +42,9 @@ $(document).ready(function() {
                     const tr = $('<tr>');
                     const td1 = $('<td>', { html: item.state });
                     const td2 = $('<td>', { html: item.uf });
-                    const td3 = $('<td>', { html: item.cases });
-                    const td4 = $('<td>', { html: item.deaths });
-                    const td5 = $('<td>', { html: item.suspects });
+                    const td3 = $('<td>', { html: formatNumber(item.cases) });
+                    const td4 = $('<td>', { html: formatNumber(item.deaths) });
+                    const td5 = $('<td>', { html: formatNumber(item.suspects) });
                     const td6 = $('<td>', { html: formatDate(item.datetime) });
 
                     td1.appendTo(tr);
@@ -92,9 +96,9 @@ $(document).ready(function() {
 
                     const td1 = $('<td>', { html: item.state });
                     const td2 = $('<td>', { html: item.uf });
-                    const td3 = $('<td>', { html: item.cases });
-                    const td4 = $('<td>', { html: item.deaths });
-                    const td5 = $('<td>', { html: item.suspects });
+                    const td3 = $('<td>', { html: formatNumber(item.cases) });
+                    const td4 = $('<td>', { html: formatNumber(item.deaths) });
+                    const td5 = $('<td>', { html: formatNumber(item.suspects) });
                     const td6 = $('<td>', { html: formatDate(item.datetime) });
 
                     td1.appendTo(tr);
@@ -136,9 +140,9 @@ $(document).ready(function() {
 
                 const td1 = $('<td>', { html: item.state });
                 const td2 = $('<td>', { html: item.uf });
-                const td3 = $('<td>', { html: item.cases });
-                const td4 = $('<td>', { html: item.deaths });
-                const td5 = $('<td>', { html: item.suspects });
+                const td3 = $('<td>', { html: formatNumber(item.cases) });
+                const td4 = $('<td>', { html: formatNumber(item.deaths) });
+                const td5 = $('<td>', { html: formatNumber(item.suspects) });
                 const td6 = $('<td>', { html: formatDate(item.datetime) });
 
                 td1.appendTo(tr);
@@ -191,8 +195,8 @@ $(document).ready(function() {
                     //Cria uma linha para cada país
                     const tr = $('<tr>');
                     const td1 = $('<td>', { html: item.country });
-                    const td2 = $('<td>', { html: item.confirmed });
-                    const td3 = $('<td>', { html: item.deaths });
+                    const td2 = $('<td>', { html: formatNumber(item.confirmed) });
+                    const td3 = $('<td>', { html: formatNumber(item.deaths) });
                     const td4 = $('<td>', { html: formatDate(item.updated_at) });
 
                     td1.appendTo(tr);
@@ -228,8 +232,8 @@ $(document).ready(function() {
 
                 const tr = $('<tr>');
                 const td1 = $('<td>', { html: item.country });
-                const td2 = $('<td>', { html: item.confirmed });
-                const td3 = $('<td>', { html: item.deaths });
+                const td2 = $('<td>', { html: formatNumber(item.confirmed) });
+                const td3 = $('<td>', { html: formatNumber(item.deaths) });
                 const td4 = $('<td>', { html: formatDate(item.updated_at) });
 
                 td1.appendTo(tr);
@@ -258,9 +262,9 @@ $(document).ready(function() {
             description.classList.add("active");            
 
             description.innerHTML = '<strong>' + estado.nome + ' (' + estado.uf + ') </strong>';
-            description.innerHTML = description.innerHTML + '<br>' + 'Casos: ' + estado.casos;
-            description.innerHTML = description.innerHTML + '<br>' + 'Mortes: ' + estado.mortes;
-            description.innerHTML = description.innerHTML + '<br>' + 'Suspeitos: ' + estado.suspeitos;
+            description.innerHTML = description.innerHTML + '<br>' + 'Casos: ' + formatNumber(estado.casos);
+            description.innerHTML = description.innerHTML + '<br>' + 'Mortes: ' + formatNumber(estado.mortes);
+            description.innerHTML = description.innerHTML + '<br>' + 'Suspeitos: ' + formatNumber(estado.suspeitos);
         })
     );
 

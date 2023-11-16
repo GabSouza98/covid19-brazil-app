@@ -13,6 +13,10 @@
     />
     <link rel="stylesheet" href="styles.css" />
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
     <script
@@ -29,14 +33,13 @@
 
     <script src="script.js"></script>
   </head>
-  <body class="bodyFundo">
+  <body>
     <div class="container">
         <div class="title pt-5" style="background-color: #E5FFF9; background-image: url('./covid2.jpg'); background-position: center center; background-size: cover;">
-            <h1 id="titulo" class="text-center pt-5 px-0"><strong>Painel COVID-19</strong></h1>
-            <h4 id="titulo" class="text-center px-0 pt-4 pb-5">Encontre aqui os principais dados sobre a atual situação do COVID-19 no Brasil e no mundo!</h4>
+            <h1 class="text-center pt-5 px-0"><strong>Painel COVID-19</strong></h1>
+            <h4 class="text-center px-0 pt-4 pb-5">Encontre aqui os principais dados sobre a atual situação do COVID-19 no Brasil e no mundo!</h4>
         </div>
-        <div class="row justify-content-md-center mt-4 ml-0 mr-0">
-            <div class="tableContainer col-10">
+        <div class="main-content">
                 <nav>
                     <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
                         <a class="nav-item nav-link active" id="nav-brasil-tab"  data-toggle="tab" href="#nav-brasil"  role="tab" aria-controls="nav-brasil"  aria-selected="true">Brasil</a>
@@ -164,7 +167,7 @@
                     <!-- Aba Mapa -->
                     <div class="tab-pane fade" id="nav-mapa" role="tabpanel" aria-labelledby="nav-mapa-tab">
 
-                        <div class="table-mapa">
+                        <div class="container-mapa">
 
                             <svg xmlns:mapsvg="http://mapsvg.com" xmlns:dc="http://purl.org/dc/elements/1.1/"
                                 xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg"
@@ -257,7 +260,6 @@
                         </div>
                     </div>
                 </div>        
-            </div>
         </div>
     </div>
   </body>
