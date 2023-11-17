@@ -9,6 +9,10 @@ function formatNumber(num) {
     return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.")
 }
 
+/*
+    Site com os endpoints da API que utilizamos:
+    https://covid19-brazil-api-docs.vercel.app/
+*/
 const BASE_API_URL = 'https://covid19-brazil-api.now.sh/api/report/v1';
 
 let estadosBr = [];
@@ -494,6 +498,11 @@ $(document).ready(function () {
         });
     });
 
+    /* 
+        Vídeo utilizado de inspiração para o código da linha 506 a 534
+        https://www.youtube.com/watch?v=QXQUjzdGZ8Y
+    */
+
     //Código para o Tooltip do Mapa
     const description = document.querySelector(".tooltip-map");
 
@@ -524,11 +533,12 @@ $(document).ready(function () {
         description.style.top = (e.pageY - 8) + "px";
     };
 
+    //Cria um mapa de calor a partir da escala do número de casos de covid por estado
     $("#mapaCalorCovid").on('click', function () {
 
         // Cores usadas para calcular o mapa de calor
-        var start = new Color(128, 255, 120),
-            end = new Color(10, 143, 0)
+        var start = new Color(128, 255, 120), //verde fraco
+            end = new Color(10, 143, 0)       //verde forte
 
         var startColors = start.getColors();
         var endColors = end.getColors();
@@ -544,39 +554,39 @@ $(document).ready(function () {
         //Máximo e mínimo de casos para usar na escala
         const max = Math.max(...cases);
         const min = Math.min(...cases);
-        console.log(max, min);
 
+        //Range de variação do número de casos
         const range = max - min;
 
         estadosBr.forEach(estado => {
 
-            //Percentual do máximo de casos
+            //Percentual do máximo de casos deste estado
             var percentCases = estado.cases / range;
-
+            //Converte decimal para porcentagem e limita em 100%
             var val = parseInt(percentCases * 100);
-            if (val > 100) {
-                val = 100;
-            }
+            if (val > 100) { val = 100; }
 
             var r = Interpolate(startColors.r, endColors.r, 50, val);
             var g = Interpolate(startColors.g, endColors.g, 50, val);
             var b = Interpolate(startColors.b, endColors.b, 50, val);
 
             $('path[id="' + estado.uf + '"]').css('fill', 'rgb(' + r + ',' + g + ',' + b + ')');
-            // $('path[id="' + estado.uf + '"]').css('fill', percentToRGB(intCases));
+            // $('path[id="' + estado.uf + '"]').css('fill', percentToRGB(intCases)); //outra escala de cor
         });
     });
 
-    $("#mapaPorRegioes").on('click', function () {    
-        
-        // $('path').css('fill', 'unset');
-        
+    //Volta para o estado inicial do mapa, com as classes por região
+    $("#mapaPorRegioes").on('click', function () {        
         estadosBr.forEach(estado => {
             const reg = regioes.find(reg => reg.uf == estado.uf);
             $('path[id="' + estado.uf + '"]').attr('class', reg.regiao);
         });
     });
 
+    /*
+        Inspiração a partir do StackOverflow:
+        https://stackoverflow.com/questions/11849308/generate-colors-between-red-and-green-for-an-input-range
+    */
     function Interpolate(start, end, steps, count) {
         var s = start,
             e = end,
@@ -605,6 +615,7 @@ $(document).ready(function () {
         }
     };
 
+    //https://stackoverflow.com/questions/340209/generate-colors-between-red-and-green-for-a-power-meter/340214#340214
     function percentToRGB(percent) {
         if (percent === 100) {
             percent = 99
