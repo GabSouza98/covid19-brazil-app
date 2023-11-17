@@ -87,6 +87,8 @@ $(document).ready(function () {
                 const tableBody = $('#tableBrasil');
                 tableBody.children().remove();
 
+                estadosBr = [];
+
                 for (let i = 0; i < lista.length; i++) {
 
                     const item = lista[i];
@@ -106,6 +108,15 @@ $(document).ready(function () {
                     td5.appendTo(tr);
                     td6.appendTo(tr);
                     tr.appendTo(tableBody);
+
+                    estadosBr.push({
+                        uf: item.uf,
+                        state: item.state,
+                        cases: item.cases,
+                        deaths: item.deaths,
+                        suspects: item.suspects,
+                        datetime: item.datetime
+                    });
                 }
             },
             error: function (req, status, err) {
@@ -234,6 +245,60 @@ $(document).ready(function () {
                 td6.appendTo(tr);
                 tr.appendTo(tableBody);
 
+            },
+            error: function (req, status, err) {
+                console.log('something went wrong', status, err);
+            }
+        });
+    });
+
+    $("#btnBuscarData").click(function () {
+
+        const selectedDate = $('#selectedDate').val();
+        const formatedDate = selectedDate.replaceAll('-', '');
+
+        $.ajax({
+            type: 'GET',
+            url: BASE_API_URL + '/brazil/' + formatedDate,
+            dataType: 'json',
+            success: function (resp) {
+
+                let lista = resp.data;
+
+                const tableBody = $('#tableBrasil');
+                tableBody.children().remove();
+
+                estadosBr = [];
+
+                for (let i = 0; i < lista.length; i++) {
+
+                    const item = lista[i];
+
+                    const tr = $('<tr>');
+                    const td1 = $('<td>', { html: item.state });
+                    const td2 = $('<td>', { html: item.uf });
+                    const td3 = $('<td>', { html: formatNumber(item.cases) });
+                    const td4 = $('<td>', { html: formatNumber(item.deaths) });
+                    const td5 = $('<td>', { html: formatNumber(item.suspects) });
+                    const td6 = $('<td>', { html: formatDate(item.datetime) });
+
+                    td1.appendTo(tr);
+                    td2.appendTo(tr);
+                    td3.appendTo(tr);
+                    td4.appendTo(tr);
+                    td5.appendTo(tr);
+                    td6.appendTo(tr);
+                    tr.appendTo(tableBody);
+
+                    estadosBr.push({
+                        uf: item.uf,
+                        state: item.state,
+                        cases: item.cases,
+                        deaths: item.deaths,
+                        suspects: item.suspects,
+                        datetime: item.datetime
+                    });
+                }
             },
             error: function (req, status, err) {
                 console.log('something went wrong', status, err);

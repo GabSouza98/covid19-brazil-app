@@ -56,7 +56,7 @@
                         <form>
                             <label for="selectUF" class="h5">Selecione a UF</label>
                             <div class="form-row">
-                                <div class="col">
+                                <div class="col-3">
                                     <div class="form-group">
                                         <select class="form-control" id="selectUF">
                                             <option value="AC">Acre</option>
@@ -95,8 +95,20 @@
                                         Buscar UF
                                     </button>
                                 </div>
+
+                                <div class="col-3">
+                                    <div class="form-group">
+                                        <input class="form-control" id="selectedDate" type="date" value="2023-08-11">
+                                    </div>
+                                </div> 
+
+                                <div class="col">  
+                                    <button id="btnBuscarData" type="button" class="btn btn-success mb-2">
+                                        Buscar Data
+                                    </button>
+                                </div>
                     
-                                <div>
+                                <div class="col">
                                     <button id="btnBuscarTodos" type="button" class="btn btn-success mb-2">
                                         Buscar Todos
                                     </button>
