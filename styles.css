@@ -128,3 +128,25 @@ path:hover {
   border-right: 10px solid transparent;
   border-top: 10px solid white;
 }
+
+#header-table-brasil #estado:hover,
+#header-table-brasil #uf:hover,
+#header-table-brasil #casos:hover {
+  cursor: pointer;
+  background-color: rgb(40, 167, 69);
+  transition: all 0.5s;
+}
+
+#header-table-mundo #country:hover,
+#header-table-mundo #confirmed:hover {
+  cursor: pointer;
+  background-color: rgb(40, 167, 69);
+  transition: all 0.5s;
+}
+
+.table thead th {
+  /* Tira as bordas */
+  border-bottom: none !important;
+  border-top: none !important;
+}
+
