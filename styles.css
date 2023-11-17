@@ -34,10 +34,15 @@ th {
 .container-mapa {
   width: 100%;
   display: flex;
+  flex-direction: row;
+  gap: 3%;
   align-items: center;
   justify-content: center;
   margin-top: 5%;
   margin-bottom: 5%;
+  padding: 5%;
+  background-color: rgba(40, 167, 70, 0.274);
+  border-radius: 50%;
 }
 
 .container {
@@ -61,23 +66,23 @@ svg {
 
 /* Pinta as regiões */
 .norte {
-  fill: #4bc210;
+  fill: #4bc210 !important;
 }
 
 .nordeste {
-  fill: darkturquoise;
+  fill: darkturquoise !important;
 }
 
 .centro-oeste {
-  fill: orange;
+  fill: orange !important;
 }
 
 .sudeste {
-  fill: red;
+  fill: red !important;
 }
 
 .sul {
-  fill: purple;
+  fill: purple !important;
 }
 
 path {
@@ -87,7 +92,7 @@ path {
 }
 
 path:hover {
-  fill: rgb(58, 58, 58); /* Pinta o estado em hovered */
+  fill: rgb(58, 58, 58) !important; /* Pinta o estado em hovered */
   stroke: white; /* Cor das linhas do estado hovered */
   stroke-width: 3px; /* Grossura das linhas do estado hovered */
   transition: fill 0.5s;
@@ -148,5 +153,10 @@ path:hover {
   /* Tira as bordas */
   border-bottom: none !important;
   border-top: none !important;
+}
+
+.map-options button {
+  font-size: 1rem;
+  font-weight: 400;
 }
 

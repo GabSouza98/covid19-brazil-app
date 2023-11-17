@@ -13,8 +13,37 @@ const BASE_API_URL = 'https://covid19-brazil-api.now.sh/api/report/v1';
 
 let estadosBr = [];
 let paisesMundo = [];
-
 let orderBy = -1;
+
+let regioes = [
+    { uf: "AC", regiao: "norte" },
+    { uf: "AM", regiao: "norte" },
+    { uf: "AP", regiao: "norte" },
+    { uf: "PA", regiao: "norte" },
+    { uf: "RO", regiao: "norte" },
+    { uf: "RR", regiao: "norte" },
+    { uf: "TO", regiao: "norte" },
+    { uf: "AL", regiao: "nordeste" },
+    { uf: "BA", regiao: "nordeste" },
+    { uf: "CE", regiao: "nordeste" },
+    { uf: "MA", regiao: "nordeste" },
+    { uf: "PB", regiao: "nordeste" },
+    { uf: "PE", regiao: "nordeste" },
+    { uf: "PI", regiao: "nordeste" },
+    { uf: "RN", regiao: "nordeste" },
+    { uf: "SE", regiao: "nordeste" },
+    { uf: "GO", regiao: "centro-oeste" },
+    { uf: "MS", regiao: "centro-oeste" },
+    { uf: "MT", regiao: "centro-oeste" },
+    { uf: "ES", regiao: "sudeste" },
+    { uf: "RJ", regiao: "sudeste" },
+    { uf: "MG", regiao: "sudeste" },
+    { uf: "SP", regiao: "sudeste" },
+    { uf: "PR", regiao: "sul" },
+    { uf: "RS", regiao: "sul" },
+    { uf: "SC", regiao: "sul" },
+    { uf: "DF", regiao: "" },
+]
 
 $(document).ready(function () {
 
@@ -494,4 +523,107 @@ $(document).ready(function () {
         description.style.left = e.pageX + "px";
         description.style.top = (e.pageY - 8) + "px";
     };
+
+    $("#mapaCalorCovid").on('click', function () {
+
+        // Cores usadas para calcular o mapa de calor
+        var start = new Color(128, 255, 120),
+            end = new Color(10, 143, 0)
+
+        var startColors = start.getColors();
+        var endColors = end.getColors();
+
+        //Apaga as classes padrão dos <path>
+        $('path').attr('class', '');
+
+        //Array de número de casos
+        const cases = estadosBr.map(e => {
+            return e.cases;
+        })
+
+        //Máximo e mínimo de casos para usar na escala
+        const max = Math.max(...cases);
+        const min = Math.min(...cases);
+        console.log(max, min);
+
+        const range = max - min;
+
+        estadosBr.forEach(estado => {
+
+            //Percentual do máximo de casos
+            var percentCases = estado.cases / range;
+
+            var val = parseInt(percentCases * 100);
+            if (val > 100) {
+                val = 100;
+            }
+
+            var r = Interpolate(startColors.r, endColors.r, 50, val);
+            var g = Interpolate(startColors.g, endColors.g, 50, val);
+            var b = Interpolate(startColors.b, endColors.b, 50, val);
+
+            $('path[id="' + estado.uf + '"]').css('fill', 'rgb(' + r + ',' + g + ',' + b + ')');
+            // $('path[id="' + estado.uf + '"]').css('fill', percentToRGB(intCases));
+        });
+    });
+
+    $("#mapaPorRegioes").on('click', function () {    
+        
+        // $('path').css('fill', 'unset');
+        
+        estadosBr.forEach(estado => {
+            const reg = regioes.find(reg => reg.uf == estado.uf);
+            $('path[id="' + estado.uf + '"]').attr('class', reg.regiao);
+        });
+    });
+
+    function Interpolate(start, end, steps, count) {
+        var s = start,
+            e = end,
+            final = s + (((e - s) / steps) * count);
+        return Math.floor(final);
+    };
+
+    class Color {
+        constructor(_r, _g, _b) {
+            var r, g, b;
+            var setColors = function (_r, _g, _b) {
+                r = _r;
+                g = _g;
+                b = _b;
+            };
+
+            setColors(_r, _g, _b);
+            this.getColors = function () {
+                var colors = {
+                    r: r,
+                    g: g,
+                    b: b
+                };
+                return colors;
+            };
+        }
+    };
+
+    function percentToRGB(percent) {
+        if (percent === 100) {
+            percent = 99
+        }
+        var r, g, b;
+    
+        if (percent < 50) {
+            // green to yellow
+            r = Math.floor(255 * (percent / 50));
+            g = 255;
+    
+        } else {
+            // yellow to red
+            r = 255;
+            g = Math.floor(255 * ((50 - percent % 50) / 50));
+        }
+        b = 0;
+    
+        return "rgb(" + r + "," + g + "," + b + ")";
+    }
+    
 });
