@@ -1,12 +1,13 @@
 
 function formatDate(dateToFormat) {
-    var d = new Date(dateToFormat);
+    var d = new Date(dateToFormat); //2023-11-17 13:30:30
     const dateString = d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear() + " " + d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
     return dateString;
 }
 
 function formatNumber(num) {
-    return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.")
+    //Regex que pega grupos de 3 e coloca o ponto de milhar
+    return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
 }
 
 /*
@@ -55,6 +56,7 @@ $(document).ready(function () {
     //quando a página é carregada
     $("#btnBuscarTodos").click(getAllStates());
 
+    //Busca todos os estados
     function getAllStates() {
 
         $.ajax({
@@ -158,89 +160,6 @@ $(document).ready(function () {
         });
     });
 
-    //Ordena pelo estado
-    $('#header-table-brasil #estado').on('click', function () {
-
-        orderBy = orderBy * -1;
-
-        estadosBr.sort((a, b) => {
-            const nameA = a.state.toUpperCase();
-            const nameB = b.state.toUpperCase();
-            if (nameA < nameB) {
-                return -orderBy;
-            }
-            if (nameA > nameB) {
-                return orderBy;
-            }
-            return 0;
-        });
-
-        atualizaListaEstados();
-    });
-
-    //Ordena pela UF
-    $('#header-table-brasil #uf').on('click', function () {
-        orderBy = orderBy * -1;
-
-        estadosBr.sort((a, b) => {
-            const nameA = a.uf.toUpperCase();
-            const nameB = b.uf.toUpperCase();
-            if (nameA < nameB) {
-                return -orderBy;
-            }
-            if (nameA > nameB) {
-                return orderBy;
-            }
-            return 0;
-        });
-
-        atualizaListaEstados();
-    });
-
-    //Ordena pelo número de casos
-    $('#header-table-brasil #casos').on('click', function () {
-        orderBy = orderBy * -1;
-
-        estadosBr.sort((a, b) => {
-            const nameA = a.cases;
-            const nameB = b.cases;
-            if (nameA < nameB) {
-                return -orderBy;
-            }
-            if (nameA > nameB) {
-                return orderBy;
-            }
-            return 0;
-        });
-
-        atualizaListaEstados();
-    });
-
-    function atualizaListaEstados() {
-        const tableBody = $('#tableBrasil');
-        tableBody.children().remove();
-
-        for (let i = 0; i < estadosBr.length; i++) {
-            const item = estadosBr[i];
-
-            const tr = $('<tr>');
-            const td1 = $('<td>', { html: item.state });
-            const td2 = $('<td>', { html: item.uf });
-            const td3 = $('<td>', { html: formatNumber(item.cases) });
-            const td4 = $('<td>', { html: formatNumber(item.deaths) });
-            const td5 = $('<td>', { html: formatNumber(item.suspects) });
-            const td6 = $('<td>', { html: formatDate(item.datetime) });
-
-            td1.appendTo(tr);
-            td2.appendTo(tr);
-            td3.appendTo(tr);
-            td4.appendTo(tr);
-            td5.appendTo(tr);
-            td6.appendTo(tr);
-            tr.appendTo(tableBody);
-        }
-    }
-
     //API para buscar um estado específico
     $("#btnBuscarUF").click(function () {
 
@@ -253,8 +172,6 @@ $(document).ready(function () {
             url: BASE_API_URL + '/brazil/uf/' + selectedUF,
             dataType: 'json',
             success: function (resp) {
-
-                console.log(resp);
 
                 const tableBody = $('#tableBrasil');
                 tableBody.children().remove();
@@ -288,7 +205,7 @@ $(document).ready(function () {
     $("#btnBuscarData").click(function () {
 
         const selectedDate = $('#selectedDate').val();
-        const formatedDate = selectedDate.replaceAll('-', '');
+        const formatedDate = selectedDate.replaceAll('-', ''); //De 2023-11-08 para 20231108
 
         $.ajax({
             type: 'GET',
@@ -401,6 +318,125 @@ $(document).ready(function () {
         });
     });
 
+    //API para buscar um país específico
+    $("#btnBuscarPais").click(function () {
+
+        const selectedCountry = $('#selectPais').val();
+
+        $.ajax({
+            type: 'GET',
+            url: BASE_API_URL + '/' + selectedCountry,
+            dataType: 'json',
+            success: function (resp) {
+
+                const tableBody = $('#tableMundo');
+                tableBody.children().remove();
+
+                const item = resp.data;
+
+                const tr = $('<tr>');
+                const td1 = $('<td>', { html: item.country });
+                const td2 = $('<td>', { html: formatNumber(item.confirmed) });
+                const td3 = $('<td>', { html: formatNumber(item.deaths) });
+                const td4 = $('<td>', { html: formatDate(item.updated_at) });
+
+                td1.appendTo(tr);
+                td2.appendTo(tr);
+                td3.appendTo(tr);
+                td4.appendTo(tr);
+                tr.appendTo(tableBody);
+
+            },
+            error: function (req, status, err) {
+                console.log('something went wrong', status, err);
+            }
+        });
+    });
+
+    //Ordenações
+    //Ordena pelo estado
+    $('#header-table-brasil #estado').on('click', function () {
+
+        orderBy = orderBy * -1;
+
+        estadosBr.sort((a, b) => {
+            const nameA = a.state.toUpperCase();
+            const nameB = b.state.toUpperCase();
+            if (nameA < nameB) {
+                return -orderBy;
+            }
+            if (nameA > nameB) {
+                return orderBy;
+            }
+            return 0;
+        });
+
+        atualizaListaEstados();
+    });
+
+    //Ordena pela UF
+    $('#header-table-brasil #uf').on('click', function () {
+        orderBy = orderBy * -1;
+
+        estadosBr.sort((a, b) => {
+            const nameA = a.uf.toUpperCase();
+            const nameB = b.uf.toUpperCase();
+            if (nameA < nameB) {
+                return -orderBy;
+            }
+            if (nameA > nameB) {
+                return orderBy;
+            }
+            return 0;
+        });
+
+        atualizaListaEstados();
+    });
+
+    //Ordena pelo número de casos
+    $('#header-table-brasil #casos').on('click', function () {
+        orderBy = orderBy * -1;
+
+        estadosBr.sort((a, b) => {
+            const nameA = a.cases;
+            const nameB = b.cases;
+            if (nameA < nameB) {
+                return -orderBy;
+            }
+            if (nameA > nameB) {
+                return orderBy;
+            }
+            return 0;
+        });
+
+        atualizaListaEstados();
+    });
+
+    function atualizaListaEstados() {
+        const tableBody = $('#tableBrasil');
+        tableBody.children().remove();
+
+        for (let i = 0; i < estadosBr.length; i++) {
+            const item = estadosBr[i];
+
+            const tr = $('<tr>');
+            const td1 = $('<td>', { html: item.state });
+            const td2 = $('<td>', { html: item.uf });
+            const td3 = $('<td>', { html: formatNumber(item.cases) });
+            const td4 = $('<td>', { html: formatNumber(item.deaths) });
+            const td5 = $('<td>', { html: formatNumber(item.suspects) });
+            const td6 = $('<td>', { html: formatDate(item.datetime) });
+
+            td1.appendTo(tr);
+            td2.appendTo(tr);
+            td3.appendTo(tr);
+            td4.appendTo(tr);
+            td5.appendTo(tr);
+            td6.appendTo(tr);
+            tr.appendTo(tableBody);
+        }
+    }
+
     //Ordena pelo nome do país
     $('#header-table-mundo #country').on('click', function () {
         orderBy = orderBy * -1;
@@ -461,43 +497,6 @@ $(document).ready(function () {
         }
     }
 
-    //API para buscar um país específico
-    $("#btnBuscarPais").click(function () {
-
-        const selectedCountry = $('#selectPais').val();
-
-        $.ajax({
-            type: 'GET',
-            url: BASE_API_URL + '/' + selectedCountry,
-            dataType: 'json',
-            success: function (resp) {
-
-                console.log(resp.data);
-
-                const tableBody = $('#tableMundo');
-                tableBody.children().remove();
-
-                const item = resp.data;
-
-                const tr = $('<tr>');
-                const td1 = $('<td>', { html: item.country });
-                const td2 = $('<td>', { html: formatNumber(item.confirmed) });
-                const td3 = $('<td>', { html: formatNumber(item.deaths) });
-                const td4 = $('<td>', { html: formatDate(item.updated_at) });
-
-                td1.appendTo(tr);
-                td2.appendTo(tr);
-                td3.appendTo(tr);
-                td4.appendTo(tr);
-                tr.appendTo(tableBody);
-
-            },
-            error: function (req, status, err) {
-                console.log('something went wrong', status, err);
-            }
-        });
-    });
-
     /* 
         Vídeo utilizado de inspiração para o código da linha 506 a 534
         https://www.youtube.com/watch?v=QXQUjzdGZ8Y
@@ -509,10 +508,11 @@ $(document).ready(function () {
     document.querySelectorAll('path').forEach((el) =>
         el.addEventListener('mouseover', (event) => {
 
+            //event.target retorna o elemento <path>
+            //event.target.id retorna o ID do elemento path, que é a UF em letras maiúsculas (AC, PE, RS, SC, SP...)
             const uf = event.target.id;
             const estado = estadosBr.find(e => e.uf == uf);
 
-            event.target.className = ("enabled");
             description.classList.add("active");
 
             description.innerHTML = '<strong>' + estado.state + ' (' + estado.uf + ') </strong>';
@@ -547,9 +547,7 @@ $(document).ready(function () {
         $('path').attr('class', '');
 
         //Array de número de casos
-        const cases = estadosBr.map(e => {
-            return e.cases;
-        })
+        const cases = estadosBr.map(e => { return e.cases; })
 
         //Máximo e mínimo de casos para usar na escala
         const max = Math.max(...cases);
@@ -571,12 +569,14 @@ $(document).ready(function () {
             var b = Interpolate(startColors.b, endColors.b, 50, val);
 
             $('path[id="' + estado.uf + '"]').css('fill', 'rgb(' + r + ',' + g + ',' + b + ')');
-            // $('path[id="' + estado.uf + '"]').css('fill', percentToRGB(intCases)); //outra escala de cor
+            
+            // const hsl = RGBToHSL(r, g, b);
+            // $('path[id="' + estado.uf + '"]').css('fill', 'hsl(' + hsl[0] + ',' + hsl[1] + '%,' + hsl[2] + '%)');
         });
     });
 
     //Volta para o estado inicial do mapa, com as classes por região
-    $("#mapaPorRegioes").on('click', function () {        
+    $("#mapaPorRegioes").on('click', function () {
         estadosBr.forEach(estado => {
             const reg = regioes.find(reg => reg.uf == estado.uf);
             $('path[id="' + estado.uf + '"]').attr('class', reg.regiao);
@@ -615,26 +615,25 @@ $(document).ready(function () {
         }
     };
 
-    //https://stackoverflow.com/questions/340209/generate-colors-between-red-and-green-for-a-power-meter/340214#340214
-    function percentToRGB(percent) {
-        if (percent === 100) {
-            percent = 99
-        }
-        var r, g, b;
-    
-        if (percent < 50) {
-            // green to yellow
-            r = Math.floor(255 * (percent / 50));
-            g = 255;
-    
-        } else {
-            // yellow to red
-            r = 255;
-            g = Math.floor(255 * ((50 - percent % 50) / 50));
-        }
-        b = 0;
-    
-        return "rgb(" + r + "," + g + "," + b + ")";
-    }
-    
+    // A partir de https://www.30secondsofcode.org/js/s/rgb-to-hsl/
+    function RGBToHSL(r, g, b) {
+        r /= 255;
+        g /= 255;
+        b /= 255;
+        const l = Math.max(r, g, b);
+        const s = l - Math.min(r, g, b);
+        const h = s
+            ? l === r
+                ? (g - b) / s
+                : l === g
+                    ? 2 + (b - r) / s
+                    : 4 + (r - g) / s
+            : 0;
+        return [
+            60 * h < 0 ? 60 * h + 360 : 60 * h,
+            100 * (s ? (l <= 0.5 ? s / (2 * l - s) : s / (2 - (2 * l - s))) : 0),
+            (100 * (2 * l - s)) / 2,
+        ];
+    };
+
 });
